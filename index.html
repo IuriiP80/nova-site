@@ -1,40 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nova Appliance Repair</title>
-<style>
-body {font-family: Arial; margin:0; background:#f5f7fa;}
-header {text-align:center; padding:40px; background:white;}
-h1 {color:#0b4a8b;}
-.container {padding:20px; text-align:center;}
-form {max-width:400px; margin:auto;}
-input, textarea {width:100%; padding:12px; margin:10px 0; border-radius:5px; border:1px solid #ccc;}
-button {background:orange; color:white; padding:12px; border:none; width:100%; border-radius:5px;}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nova Appliance Repair</title>
+  <meta name="description" content="Fast and reliable appliance repair. Request service for washer, dryer, refrigerator, oven and more." />
+  <style>
+    :root{
+      --blue:#0b4ea2;
+      --orange:#f5821f;
+      --dark:#16314f;
+      --text:#344054;
+      --bg:#f4f7fb;
+      --white:#ffffff;
+      --shadow:0 10px 30px rgba(15, 33, 66, 0.10);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      color:var(--text);
+      background:var(--bg);
+      line-height:1.5;
+    }
+    a{text-decoration:none;color:inherit}
+    .container{width:min(1120px, calc(100% - 32px)); margin:0 auto}
+    .topbar{
+      background:var(--white);
+      border-bottom:1px solid #e6ebf2;
+      position:sticky; top:0; z-index:100;
+      backdrop-filter:saturate(160%) blur(8px);
+    }
+    .topbar-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:16px; padding:12px 0;
+    }
+    .brand{display:flex; align-items:center; gap:14px}
+    .brand img{height:56px; width:auto; display:block}
+    .brand-name{font-weight:800; color:var(--blue); font-size:1.15rem}
+    .nav{display:flex; gap:20px; align-items:center; font-weight:600; color:#46607e}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:14px 22px; border-radius:999px; font-weight:700;
+      transition:.2s ease; border:none; cursor:pointer;
+    }
+    .btn-primary{background:var(--orange); color:#fff; box-shadow:var(--shadow)}
+    .btn-primary:hover{transform:translateY(-1px); filter:brightness(.98)}
+    .btn-secondary{background:#e9f1fb; color:var(--blue)}
+    .hero{padding:54px 0 30px}
+    .hero-grid{
+      display:grid; grid-template-columns:1.15fr .85fr; gap:28px; align-items:center;
+    }
+    .hero-card,.form-card,.service-card,.why-card,.contact-card{
+      background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow);
+    }
+    .hero-card{padding:42px}
+    .eyebrow{color:var(--orange); font-weight:800; letter-spacing:.06em; text-transform:uppercase; font-size:.8rem}
+    h1{font-size:clamp(2.1rem, 4.5vw, 4.2rem); line-height:1.02; margin:10px 0 18px; color:var(--dark)}
+    .lead{font-size:1.08rem; max-width:58ch; margin:0 0 22px}
+    .hero-actions{display:flex; flex-wrap:wrap; gap:12px; margin:24px 0}
+    .badges{display:flex; flex-wrap:wrap; gap:10px; margin-top:20px}
+    .badge{background:#eef5ff; color:var(--blue); padding:10px 14px; border-radius:999px; font-weight:700; font-size:.95rem}
+    .logo-panel{padding:24px; display:flex; align-items:center; justify-content:center; min-height:100%}
+    .logo-panel img{max-width:100%; width:100%; height:auto; object-fit:contain}
+    .section{padding:32px 0}
+    .section-title{text-align:center; margin-bottom:22px}
+    .section-title h2{font-size:2rem; color:var(--dark); margin:0 0 8px}
+    .section-title p{margin:0; color:#60758e}
+    .services{display:grid; grid-template-columns:repeat(4,1fr); gap:18px}
+    .service-card{padding:24px}
+    .service-card h3{margin:0 0 8px; color:var(--blue)}
+    .service-card p{margin:0}
+    .why-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+    .why-card{padding:24px}
+    .why-card h3{margin:0 0 8px; color:var(--dark)}
+    .form-section{padding:38px 0 52px}
+    .form-grid{display:grid; grid-template-columns:.9fr 1.1fr; gap:22px; align-items:start}
+    .contact-card{padding:28px}
+    .contact-card h3,.form-card h3{margin:0 0 10px; color:var(--dark); font-size:1.5rem}
+    .contact-list{display:grid; gap:12px; margin-top:18px}
+    .contact-item{padding:14px 16px; background:#f7faff; border-radius:14px}
+    .contact-item strong{display:block; color:var(--blue); margin-bottom:4px}
+    .form-card{padding:28px}
+    form{display:grid; gap:14px}
+    .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+    input, select, textarea{
+      width:100%; padding:14px 15px; border:1px solid #d8e1ec; border-radius:14px;
+      font:inherit; color:var(--text); background:#fff;
+    }
+    textarea{min-height:130px; resize:vertical}
+    input:focus, select:focus, textarea:focus{outline:none; border-color:#7fb0f7; box-shadow:0 0 0 4px rgba(11,78,162,.08)}
+    .fineprint{font-size:.9rem; color:#6b7f96; margin-top:8px}
+    footer{padding:24px 0 38px; color:#74869c; text-align:center}
+    @media (max-width: 980px){
+      .hero-grid,.form-grid,.services,.why-grid{grid-template-columns:1fr 1fr}
+      .nav{display:none}
+    }
+    @media (max-width: 680px){
+      .hero-grid,.form-grid,.services,.why-grid,.grid-2{grid-template-columns:1fr}
+      .hero-card,.form-card,.contact-card{padding:22px}
+      .brand img{height:46px}
+      .topbar-inner{padding:10px 0}
+    }
+  </style>
 </head>
 <body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="#top" class="brand">
+        <img src="logo.png" alt="Nova Appliance Repair logo" />
+        <div class="brand-name">Nova Appliance Repair</div>
+      </a>
+      <nav class="nav">
+        <a href="#services">Services</a>
+        <a href="#why-us">Why Us</a>
+        <a href="#request">Request Service</a>
+        <a class="btn btn-primary" href="#request">Book Now</a>
+      </nav>
+    </div>
+  </header>
 
-<header>
-<h1>Nova Appliance Repair</h1>
-<p>Fast & Reliable Appliance Repair</p>
-</header>
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-card">
+          <div class="eyebrow">Fast • Reliable • Professional</div>
+          <h1>Appliance repair you can book in minutes</h1>
+          <p class="lead">
+            We repair washers, dryers, refrigerators, ovens, dishwashers and more.
+            Submit your request online and we will contact you to confirm your service.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#request">Request Service</a>
+            <a class="btn btn-secondary" href="tel:+10000000000">Call Now</a>
+          </div>
+          <div class="badges">
+            <span class="badge">Same-Day Availability</span>
+            <span class="badge">Residential Service</span>
+            <span class="badge">Clear Communication</span>
+          </div>
+        </div>
+        <div class="hero-card logo-panel">
+          <img src="logo.png" alt="Nova Appliance Repair" />
+        </div>
+      </div>
+    </section>
 
-<div class="container">
-<h2>Request Service</h2>
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section-title">
+          <h2>Our Services</h2>
+          <p>Quick support for the most common household appliance problems.</p>
+        </div>
+        <div class="services">
+          <article class="service-card">
+            <h3>Washer Repair</h3>
+            <p>Not draining, not spinning, leaking, or making noise.</p>
+          </article>
+          <article class="service-card">
+            <h3>Dryer Repair</h3>
+            <p>No heat, long dry times, unusual noise, or no power.</p>
+          </article>
+          <article class="service-card">
+            <h3>Refrigerator Repair</h3>
+            <p>Cooling issues, frost buildup, leaks, and fan problems.</p>
+          </article>
+          <article class="service-card">
+            <h3>Oven & Range</h3>
+            <p>Heating issues, burner faults, control panel and ignition problems.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-<form action="https://formspree.io/f/mdaplrvq" method="POST">
-<input type="text" name="name" placeholder="Your Name" required>
-<input type="tel" name="phone" placeholder="Phone Number" required>
-<input type="email" name="email" placeholder="Email">
-<input type="text" name="appliance" placeholder="Appliance Type">
-<textarea name="message" placeholder="Describe the problem" required></textarea>
-<input type="hidden" name="_subject" value="New Service Request">
-<button type="submit">Send Request</button>
-</form>
+    <section class="section" id="why-us">
+      <div class="container">
+        <div class="section-title">
+          <h2>Why Choose Nova</h2>
+          <p>Built for local service businesses that need simple, fast lead capture.</p>
+        </div>
+        <div class="why-grid">
+          <article class="why-card">
+            <h3>Fast Response</h3>
+            <p>Customers can send a request in less than a minute from phone or desktop.</p>
+          </article>
+          <article class="why-card">
+            <h3>Professional Look</h3>
+            <p>Clean design, strong call-to-action, and branding matched to your logo colors.</p>
+          </article>
+          <article class="why-card">
+            <h3>Ready for Ads</h3>
+            <p>One-page layout works well for Google Ads, local marketing, and social traffic.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-</div>
+    <section class="form-section" id="request">
+      <div class="container form-grid">
+        <aside class="contact-card">
+          <h3>Contact Information</h3>
+          <p>Replace these details with your real business contacts before publishing.</p>
+          <div class="contact-list">
+            <div class="contact-item">
+              <strong>Phone</strong>
+              <a href="tel:+10000000000">+1 (000) 000-0000</a>
+            </div>
+            <div class="contact-item">
+              <strong>Email</strong>
+              <a href="mailto:info@novaappliancerepair.com">info@novaappliancerepair.com</a>
+            </div>
+            <div class="contact-item">
+              <strong>Service Area</strong>
+              Palm Beach, Jupiter, West Palm Beach and nearby areas
+            </div>
+          </div>
+        </aside>
 
+        <div class="form-card">
+          <h3>Request Service</h3>
+          <form action="https://formspree.io/f/your-form-id" method="POST">
+            <div class="grid-2">
+              <input type="text" name="name" placeholder="Full Name" required />
+              <input type="tel" name="phone" placeholder="Phone Number" required />
+            </div>
+            <div class="grid-2">
+              <input type="email" name="email" placeholder="Email Address" />
+              <select name="appliance" required>
+                <option value="">Select Appliance</option>
+                <option>Washer</option>
+                <option>Dryer</option>
+                <option>Refrigerator</option>
+                <option>Dishwasher</option>
+                <option>Oven / Range</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <input type="text" name="address" placeholder="Service Address" />
+            <textarea name="message" placeholder="Describe the problem"></textarea>
+            <button class="btn btn-primary" type="submit">Send Request</button>
+          </form>
+          <div class="fineprint">
+            Form is set up for Formspree. Replace <strong>your-form-id</strong> with your real form ID.
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">© 2026 Nova Appliance Repair. All rights reserved.</div>
+  </footer>
 </body>
 </html>
