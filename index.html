@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nova Appliance Repair</title>
+<style>
+body {font-family: Arial; margin:0; background:#f5f7fa;}
+header {text-align:center; padding:40px; background:white;}
+h1 {color:#0b4a8b;}
+.container {padding:20px; text-align:center;}
+form {max-width:400px; margin:auto;}
+input, textarea {width:100%; padding:12px; margin:10px 0; border-radius:5px; border:1px solid #ccc;}
+button {background:orange; color:white; padding:12px; border:none; width:100%; border-radius:5px;}
+</style>
+</head>
+<body>
+
+<header>
+<h1>Nova Appliance Repair</h1>
+<p>Fast & Reliable Appliance Repair</p>
+</header>
+
+<div class="container">
+<h2>Request Service</h2>
+
+<form action="https://formspree.io/f/mdaplrvq" method="POST">
+<input type="text" name="name" placeholder="Your Name" required>
+<input type="tel" name="phone" placeholder="Phone Number" required>
+<input type="email" name="email" placeholder="Email">
+<input type="text" name="appliance" placeholder="Appliance Type">
+<textarea name="message" placeholder="Describe the problem" required></textarea>
+<input type="hidden" name="_subject" value="New Service Request">
+<button type="submit">Send Request</button>
+</form>
+
+</div>
+
+</body>
+</html>
